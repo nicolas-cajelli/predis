@@ -122,6 +122,10 @@ class StreamConnection extends AbstractConnection
      */
     protected function createStreamSocket(ParametersInterface $parameters, $address, $flags)
     {
+        if (extension_loaded('newrelic')) {
+            newrelic_add_custom_parameter('redis_address', $address);
+        }
+        
         $timeout = (isset($parameters->timeout) ? (float) $parameters->timeout : 5.0);
 
         if (!$resource = @stream_socket_client($address, $errno, $errstr, $timeout, $flags)) {
