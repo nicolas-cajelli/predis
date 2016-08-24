@@ -395,6 +395,7 @@ class SentinelReplication implements ReplicationInterface
                 'host' => $slave[3],
                 'port' => $slave[5],
                 'alias' => "slave-$slave[1]",
+                'timeout' => $sentinel->getParameters()->timeout
             );
         }
 
