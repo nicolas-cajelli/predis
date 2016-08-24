@@ -360,6 +360,7 @@ class SentinelReplication implements ReplicationInterface
             'host' => $payload[0],
             'port' => $payload[1],
             'alias' => 'master',
+            'timeout' => $sentinel->getParameters()->timeout
         );
     }
 
