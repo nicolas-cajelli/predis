@@ -128,4 +128,12 @@ class RawCommand implements CommandInterface
     {
         return $data;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function isDistributed()
+    {
+        return false;
+    }
 }

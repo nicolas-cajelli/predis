@@ -25,4 +25,11 @@ class ConnectionSelect extends Command
     {
         return 'SELECT';
     }
+    
+    public function isDistributed()
+    {
+        return true;
+    }
+    
+    
 }

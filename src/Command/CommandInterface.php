@@ -78,4 +78,11 @@ interface CommandInterface
      * @return mixed
      */
     public function parseResponse($data);
+    
+    /**
+     * Specifies if command should be executed on all connections
+     *
+     * @return boolean
+     */
+    public function isDistributed();
 }

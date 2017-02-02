@@ -126,4 +126,11 @@ abstract class Command implements CommandInterface
 
         return $arguments;
     }
+    
+    public function isDistributed()
+    {
+        return false;
+    }
+    
+    
 }

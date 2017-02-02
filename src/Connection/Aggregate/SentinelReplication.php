@@ -360,6 +360,7 @@ class SentinelReplication implements ReplicationInterface
             'host' => $payload[0],
             'port' => $payload[1],
             'alias' => 'master',
+            'timeout' => $sentinel->getParameters()->timeout
         );
     }
 
@@ -394,6 +395,7 @@ class SentinelReplication implements ReplicationInterface
                 'host' => $slave[3],
                 'port' => $slave[5],
                 'alias' => "slave-$slave[1]",
+                'timeout' => $sentinel->getParameters()->timeout
             );
         }
 
@@ -664,7 +666,14 @@ class SentinelReplication implements ReplicationInterface
 
         SENTINEL_RETRY: {
             try {
-                $response = $this->getConnection($command)->$method($command);
+                if ($command->isDistributed()) {
+                    $response = $this->getMaster()->$method($command);
+                    foreach ($this->getSlaves() as $slave) {
+                        $slave->$method($command);
+                    }
+                } else {
+                    $response = $this->getConnection($command)->$method($command);
+                }
             } catch (CommunicationException $exception) {
                 $this->wipeServerList();
                 $exception->getConnection()->disconnect();
